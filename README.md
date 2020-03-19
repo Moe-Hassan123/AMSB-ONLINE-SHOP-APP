@@ -1,2 +1,2 @@
-# amsb-online-shope-app
+# AMSB-ONLINE-SHOP-APP
 CS477- GROUP-PROJECT
