@@ -1,5 +1,5 @@
-const path = require('path');
 
+const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -12,11 +12,10 @@ const compression = require('compression');
 const helmet = require('helmet');
 const morgan = require('morgan');
 
-
 const errorController = require('./controllers/error');
 const User = require('./models/user');
 const MONGODB_URI =
-  'mongodb://127.0.0.1:27017/amsb-onlineshop';
+  `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@amsb-cluster0-ngmrp.mongodb.net/${process.env.MONGO_DEFAULT_DATABASE}`;
 
 const app = express();
 
@@ -29,6 +28,7 @@ const store = new MongoDBStore({
   collection: 'sessions'
 });
 const csrfProtection = csrf();
+
 
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -111,15 +111,22 @@ app.get('/500', errorController.get500);
 
 app.use(errorController.get404);
 
-
-
-mongoose
-  .connect(MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
-  .then(result => {
-    app.listen(5000, () => {
+app.use((error, req, res, next) => {
+  res.status(error.httpStatusCode).render();
+  res.redirect('/500');
+  res.status(500).render('500', {
+    pageTitle: 'Error!',
+    path: '/500',
+    isAuthenticated: req.session.isLoggedIn
+  });
+});
+mongoose.set('useCreateIndex', true);
+mongoose.connect(MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+  .then(() => {
+    app.listen(process.env.PORT || 5000, () => {
       console.log("Running at 5000")
     });
   })

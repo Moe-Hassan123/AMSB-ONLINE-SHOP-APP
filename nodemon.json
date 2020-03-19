@@ -1,0 +1,8 @@
+{
+  "env": {
+    "MONGO_USER": "amsb",
+    "MONGO_PASSWORD": "12345",
+    "MONGO_DEFAULT_DATABASE": "amsb-onlineshop",
+    "STRIPE_KEY": "sk_test_odakEnXQ5wFxq9vzuba6JeDt00GghUqI1q"
+  }
+}

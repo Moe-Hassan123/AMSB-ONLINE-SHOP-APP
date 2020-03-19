@@ -21,7 +21,6 @@
     "multer": "^1.4.2",
     "nodemailer": "^6.4.5",
     "nodemailer-sendgrid-transport": "^0.2.0",
-    "pdfkit": "^0.11.0",
     "stripe": "^8.32.0"
   },
   "devDependencies": {
@@ -29,7 +28,9 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start": "NODE_ENV=production MONGO_USER=amsb MONGO_PASSWORD=12345 MONGO_DEFAULT_DATABASE=amsb-onlineshop STRIPE_KEY=sk_test_odakEnXQ5wFxq9vzuba6JeDt00GghUqI1q node app.js",
+    "server": "node app.js",
+    "start:dev": "nodemon app.js"
   },
   "author": "Ashim Ghimire, Mohammed Hasan, Selamwit Shibru, Bereket Teklu",
   "license": "ISC"
